@@ -1,70 +1,202 @@
-# Getting Started with Create React App
+# 🏨 LuxeStay Hotel Booking Chatbot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+LuxeStay is a full-stack serverless hotel booking application that allows users to explore luxury rooms and interact with an AI-powered chatbot to make and manage reservations. The application is hosted on AWS and integrates multiple cloud services to provide a real-world hotel booking experience.
 
-## Available Scripts
+## 🚀 Live Demo
 
-In the project directory, you can run:
+🌐 Website: https://d38qxfq766jrye.cloudfront.net
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✨ Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🏨 Hotel Website
+- Responsive React-based hotel booking interface
+- Explore multiple room categories:
+  - Classic Room
+  - Deluxe Room
+  - Duplex Suite
+  - Family Suite
+  - Penthouse Suite
+  - Business Studio
+- Detailed room descriptions, amenities, pricing, and images
 
-### `npm test`
+### 🤖 AI Concierge Chatbot
+- Conversational hotel booking experience using Amazon Lex V2
+- Book hotel rooms interactively
+- Cancel existing bookings
+- View available room types
+- Smart slot-filling for:
+  - Guest Name
+  - Room Type
+  - Check-In Date
+  - Check-Out Date
+  - Number of Guests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 📅 Booking Management
+- Prevents overbooking by checking room capacity and availability
+- Stores booking details securely
+- Provides booking confirmations
 
-### `npm run build`
+### 📧 Notifications
+- Sends email confirmations using Amazon SES
+- Sends administrative alerts using Amazon SNS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🏗️ Architecture
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```text
+User Browser
+      ↓
+React Frontend (Amazon S3 + CloudFront)
+      ↓
+Amazon Cognito Identity Pool
+      ↓
+Amazon Lex V2 (LuxeStayBot)
+      ↓
+AWS Lambda (HotelBookingHandler)
+      ↓
+┌────────────┬─────────────┬────────────┐
+│ DynamoDB   │ Amazon SES │ Amazon SNS │
+│ Bookings   │ Email      │ Alerts     │
+└────────────┴─────────────┴────────────┘
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ☁️ AWS Services Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Service | Purpose |
+|---------|----------|
+| Amazon S3 | Static website hosting |
+| Amazon CloudFront | CDN and HTTPS delivery |
+| Amazon Lex V2 | Conversational chatbot |
+| Amazon Cognito | Guest authentication and temporary AWS credentials |
+| AWS Lambda | Booking logic and fulfillment |
+| Amazon DynamoDB | Booking storage |
+| Amazon SES | Booking confirmation emails |
+| Amazon SNS | Administrative notifications |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🛠️ Tech Stack
 
-## Learn More
+### Frontend
+- React.js
+- HTML5
+- CSS3
+- JavaScript (ES6)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Cloud & Backend
+- Amazon Lex V2
+- AWS Lambda (Python)
+- Amazon DynamoDB
+- Amazon Cognito
+- Amazon SES
+- Amazon SNS
+- Amazon S3
+- Amazon CloudFront
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 📂 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```text
+luxestay-frontend/
+│
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── chatbot.js
+│   │   ├── HeroSection.js
+│   │   └── RoomShowcase.js
+│   │
+│   ├── styles/
+│   │   ├── App.css
+│   │   └── chatbot.css
+│   │
+│   ├── App.js
+│   └── index.js
+│
+├── package.json
+└── README.md
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## ⚙️ Setup Instructions
 
-### Making a Progressive Web App
+### Clone Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+git clone https://github.com/nidhi-005/LuxeStay-Hotel-Booking-Chatbot.git
+cd LuxeStay-Hotel-Booking-Chatbot/luxestay-frontend
+```
 
-### Advanced Configuration
+### Install Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm install
+```
 
-### Deployment
+### Run Locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm start
+```
 
-### `npm run build` fails to minify
+Application will run on:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```text
+http://localhost:3000
+```
+
+### Build Production Version
+
+```bash
+npm run build
+```
+
+---
+
+## 📸 Screenshots
+
+### Home Page
+- Luxury hotel landing page
+- Room showcase cards
+- Responsive design
+
+### AI Chatbot
+- Hotel booking conversation
+- Room recommendations
+- Booking confirmations
+
+---
+
+## 🎯 Learning Outcomes
+
+This project demonstrates:
+
+- Building conversational interfaces using Amazon Lex V2
+- Implementing serverless architectures on AWS
+- Integrating multiple AWS services
+- Secure authentication using Amazon Cognito
+- Hosting React applications on S3 and CloudFront
+- Designing scalable cloud-native applications
+
+---
+
+## 👩‍💻 Author
+
+**Yashaswini L**  
+B.Tech Computer Science and Engineering  
+Indian Institute of Technology Dharwad
+
+GitHub: https://github.com/nidhi-005
+
+---
+
+## 📜 License
+
+This project is developed for educational and learning purposes.
