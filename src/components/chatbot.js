@@ -148,7 +148,7 @@ async function getSigningKey(secret, date, region, service) {
 }
 
 // ── REACT COMPONENT ───────────────────────────────────────────
-export default function ChatBot() {
+export default function ChatBot({ isOpen: externalIsOpen, setIsOpen: setExternalIsOpen, prefillMessage, onClearPrefill }) {
   const [isOpen,   setIsOpen]   = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -161,15 +161,31 @@ export default function ChatBot() {
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Auto-scroll chat to bottom when messages change, when the
+  // chat opens/closes, or while the user types so the latest
+  // messages and input remain visible without manual scrolling.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isOpen]);
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [messages, isOpen, input]);
+
+  useEffect(() => {
+    if (externalIsOpen !== undefined) {
+      setIsOpen(externalIsOpen);
+    }
+  }, [externalIsOpen]);
 
   useEffect(() => {
     if (isOpen && !loading) {
       inputRef.current?.focus();
     }
   }, [isOpen, loading]);
+
+  useEffect(() => {
+    if (prefillMessage && isOpen) {
+      setInput(prefillMessage);
+      onClearPrefill?.();
+    }
+  }, [prefillMessage, isOpen, onClearPrefill]);
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -213,7 +229,10 @@ export default function ChatBot() {
     <>
       <button
         className={`chat-fab ${isOpen ? 'fab-open' : ''}`}
-        onClick={() => setIsOpen(o => !o)}
+        onClick={() => {
+          setIsOpen(o => !o);
+          setExternalIsOpen?.(o => !o);
+        }}
         aria-label="Open chat"
       >
         {isOpen ? '✕' : '💬'}
@@ -229,7 +248,10 @@ export default function ChatBot() {
                 <span className="status-dot" /> AI Concierge · Online
               </div>
             </div>
-            <button className="chat-close-btn" onClick={() => setIsOpen(false)}>✕</button>
+            <button className="chat-close-btn" onClick={() => {
+              setIsOpen(false);
+              setExternalIsOpen?.(false);
+            }}>✕</button>
           </div>
 
           <div className="chat-messages">
